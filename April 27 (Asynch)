@@ -1,0 +1,28 @@
+"@AUTHOR: Krizia Tebelin"
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Generate synthetic data (you can replace this with your own dataset)
+np.random.seed(42)
+X = np.linspace(0, 10, 100)
+true_slope = 2
+true_intercept = 5
+noise = np.random.normal(0, 1, 100)
+y = true_slope * X + true_intercept + noise
+
+# Fit Bayesian linear regression model
+X_matrix = np.column_stack((np.ones_like(X), X))  # Add intercept term
+cov_matrix = np.linalg.inv(np.dot(X_matrix.T, X_matrix))
+beta_hat = np.dot(cov_matrix, np.dot(X_matrix.T, y))
+
+# Make predictions
+X_new = np.linspace(0, 12, 100)
+y_pred = beta_hat[0] + beta_hat[1] * X_new
+
+# Plot the data and predictions
+plt.scatter(X, y, label='Observed data')
+plt.plot(X_new, y_pred, color='red', label='Bayesian Regression')
+plt.xlabel('X')
+plt.ylabel('y')
+plt.legend()
+plt.show()
